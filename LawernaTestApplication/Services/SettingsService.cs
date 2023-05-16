@@ -29,7 +29,7 @@ public class SettingsService
     
     public ApplicationSettings Settings { get; set; } = null!;
 
-    private readonly string _configurationPath = Path.Combine(App.ExecutableDirPath, "appsettings1.json");
+    private readonly string _configurationPath = Path.Combine(App.ExecutableDirPath, "appsettings.json");
 
     public SettingsService(IViewModelFactory viewModelFactory, DialogManager dialogManager)
     {
@@ -42,7 +42,6 @@ public class SettingsService
     {
         Settings = new ApplicationSettings()
         {
-            Country = null,
             City = null,
             ApiKey = null,
             UpdateInterval = 1000
