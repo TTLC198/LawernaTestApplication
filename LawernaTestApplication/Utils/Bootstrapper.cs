@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using HSMonitor.Services;
+using LawernaTestApplication.Services;
 using LawernaTestApplication.ViewModels;
 using LawernaTestApplication.ViewModels.Framework;
 using Stylet;
@@ -14,21 +16,26 @@ public class Bootstrapper : Bootstrapper<MainWindowViewModel>
     {
         base.ConfigureIoC(builder);
         
+        builder.Bind<SettingsService>().ToSelf().InSingletonScope();
+        builder.Bind<ParserService>().ToSelf().InSingletonScope();
         builder.Bind<DialogManager>().ToSelf().InSingletonScope();
         
         builder.Bind<IViewModelFactory>().ToAbstractFactory();
 
         builder.Bind<MainWindowViewModel>().ToSelf().InSingletonScope();
-    }
-    
-    protected override void Launch()
-    {
-        
-        base.Launch();
+        builder.Bind<SettingsViewModel>().ToSelf().InSingletonScope();
     }
 
-    protected override void OnExit(ExitEventArgs e)
+    protected override void Launch()
     {
-        base.OnExit(e);
+        // Load settings (this has to come before any view is loaded because bindings are not updated)
+        GetInstance<SettingsService>().Load();
+
+        GetInstance<ParserService>().WeatherInformationUpdate();
+
+        // Stylet/WPF is slow, so we preload all dialogs, including descendants, for smoother UX
+        _ = GetInstance<DialogManager>().GetViewForDialogScreen(GetInstance<SettingsViewModel>());
+
+        base.Launch();
     }
 }
