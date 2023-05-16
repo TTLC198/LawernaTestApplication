@@ -3,6 +3,7 @@ using System.Windows.Data;
 
 namespace LawernaTestApplication.Utils.Converters;
 
+// converter to access images
 public class UrlToImageConverter : IValueConverter
 {
     public static UrlToImageConverter Instance { get; } = new();

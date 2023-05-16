@@ -4,6 +4,7 @@ using System.Windows.Data;
 
 namespace LawernaTestApplication.Utils.Converters;
 
+// simple converter
 [ValueConversion(typeof(bool), typeof(bool))]
 public class InverseBoolConverter : IValueConverter
 {

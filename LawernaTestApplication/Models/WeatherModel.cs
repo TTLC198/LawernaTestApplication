@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace LawernaTestApplication.Models;
 
+// Description of the class of incoming data from the site
 public class Coord
 {
     [JsonPropertyName("lon")]

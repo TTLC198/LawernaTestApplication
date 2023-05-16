@@ -12,7 +12,7 @@ namespace LawernaTestApplication.Services;
 public class ParserService
 {
     private readonly SettingsService _settingsService;
-    public WeatherData WeatherData { get; set; }
+    public WeatherData? WeatherData { get; set; }
 
     public ParserService(SettingsService settingsService)
     {
@@ -30,18 +30,29 @@ public class ParserService
     
     public async void WeatherInformationUpdate()
     {
+        // Getting weather information
         try
         {
+            // Get call
+            /*
+             * From openweathermap.org API docs:
+             * q - City name, state code and country code divided by comma.
+             * units - metric
+             * appid - API Key
+             */
             var getProductsRequest = await WebApiService.GetCall($"?q={_settingsService.Settings.City}&units=metric&appid={_settingsService.Settings.ApiKey}");
             if (getProductsRequest.IsSuccessStatusCode)
             {
+                // Request json deserialize timeout
                 var timeoutAfter = TimeSpan.FromMilliseconds(3000);
                 using var cancellationTokenSource = new CancellationTokenSource(timeoutAfter);
                 var responseStream =
                     await getProductsRequest.Content.ReadAsStreamAsync(cancellationTokenSource.Token);
+                // Read response stream
                 var weatherData = await JsonSerializer.DeserializeAsync<WeatherData>(
                     responseStream,
                     CustomJsonSerializerOptions.Options, cancellationToken: cancellationTokenSource.Token);
+                // Write data
                 WeatherData = weatherData ?? throw new InvalidOperationException("Weather data is null");
             }
             else

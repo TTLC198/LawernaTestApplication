@@ -48,6 +48,7 @@ public class MainWindowViewModel : Screen, INotifyPropertyChanged
 
     public async void OnViewFullyLoaded()
     {
+        // Creating a timer that will update the weather
         _updateWeatherInformationTimer = new DispatcherTimer(
             priority: DispatcherPriority.Background,
             interval: TimeSpan.FromMilliseconds(
@@ -57,7 +58,7 @@ public class MainWindowViewModel : Screen, INotifyPropertyChanged
             callback: (_, _) => { _parserService.WeatherInformationUpdate(); },
             dispatcher: Dispatcher.FromThread(Thread.CurrentThread) ?? throw new InvalidOperationException()
         );
-
+        // Changing timer settings while saving settings
         _settingsService.SettingsSaved += (_, _) =>
         {
             _updateWeatherInformationTimer.Interval = TimeSpan.FromMilliseconds(
@@ -65,20 +66,23 @@ public class MainWindowViewModel : Screen, INotifyPropertyChanged
                     ? 500 
                     : _settingsService.Settings.UpdateInterval);
         };
-        
+        // Show window about the first start
         if (_settingsService.Settings is {ApiKey: null} and {City: null})
             await FirstStart();
     }
 
     private void OnWeatherInformationUpdated(object? sender, EventArgs e)
     {
+        // Simple check
         if (sender is not ParserService parser)
             return;
+        // Weather data refresh
         WeatherData = parser.WeatherData;
     }
     
     private async Task FirstStart()
     {
+        // View window about the first start
         var messageBoxDialog = _viewModelFactory.CreateMessageBoxViewModel(
             title: "First usage",
             message: $@"
@@ -97,11 +101,12 @@ Click on OK to go to settings.".Trim(),
 
     public async void ShowSettings()
     {
+        // Settings service load
         _settingsService.Load();
         await _dialogManager.ShowDialogAsync(_viewModelFactory.CreateSettingsViewModel());
     }
 
-    public void ShowAbout() => OpenUrl.Open(App.GitHubProjectUrl);
+    public void ShowAbout() => OpenUrl.Open(App.GitHubProjectUrl); // About Button Implementation
 
-    private void Exit() => Application.Current.Shutdown();
+    private void Exit() => Application.Current.Shutdown(); // Exit Button Implementation
 }

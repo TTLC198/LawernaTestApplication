@@ -7,6 +7,7 @@ public class OpenUrl
 {
     public static void Open(string url)
     {
+        // Open external link
         try
         {
             Process.Start(url);

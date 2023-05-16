@@ -4,6 +4,7 @@ using System.Windows.Controls;
 
 namespace LawernaTestApplication.Utils.ValidationRules;
 
+// simple validation rule
 public class IntValueRule: ValidationRule
 {
     public int Min { get; set; }

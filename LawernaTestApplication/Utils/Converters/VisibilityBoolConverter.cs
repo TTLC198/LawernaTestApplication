@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace LawernaTestApplication.Utils.Converters;
 
+// simple converter
 [ValueConversion(typeof(bool), typeof(Visibility))]
 public class VisibilityBoolConverter : IValueConverter
 {

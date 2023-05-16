@@ -1,5 +1,6 @@
 ﻿namespace LawernaTestApplication.Models;
 
+// Application settings
 public class ApplicationSettings
 {
     public string? City { get; set; }

@@ -27,12 +27,7 @@ namespace LawernaTestApplication
         
         public static string ApiUrl { get; } = "https://api.openweathermap.org/data/2.5/weather";
 
-        public static string SettingsDirPath { get; } =
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Name);
-
         public static string ExecutableDirPath { get; } = AppDomain.CurrentDomain.BaseDirectory!;
-
-        public static string ExecutableFilePath { get; } = Path.ChangeExtension(typeof(App).Assembly.Location, "exe");
 
         public static string GitHubProjectUrl { get; } =
             "https://github.com/TTLC198/LawernaTestApplication";

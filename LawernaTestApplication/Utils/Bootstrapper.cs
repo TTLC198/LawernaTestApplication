@@ -15,7 +15,7 @@ public class Bootstrapper : Bootstrapper<MainWindowViewModel>
     protected override void ConfigureIoC(IStyletIoCBuilder builder)
     {
         base.ConfigureIoC(builder);
-        
+        // IoC binds
         builder.Bind<SettingsService>().ToSelf().InSingletonScope();
         builder.Bind<ParserService>().ToSelf().InSingletonScope();
         builder.Bind<DialogManager>().ToSelf().InSingletonScope();
