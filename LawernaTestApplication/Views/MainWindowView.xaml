@@ -1,12 +1,209 @@
 ﻿<Window x:Class="LawernaTestApplication.Views.MainWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:LawernaTestApplication.Views"
-        mc:Ignorable="d"
-        Title="MainWindowView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="https://github.com/canton7/Stylet"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:hsMonitor="clr-namespace:HSMonitor"
+        xmlns:lawernaTestApplication="clr-namespace:LawernaTestApplication"
+        xmlns:viewModels1="clr-namespace:LawernaTestApplication.ViewModels"
+        xmlns:converters="clr-namespace:LawernaTestApplication.Utils.Converters"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Style="{DynamicResource MaterialDesignRoot}"
+        d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}"
+        Height="380"
+        Width="280"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="{x:Static lawernaTestApplication:App.Name}"
+        Loaded="MainWindow_OnLoaded"
+        mc:Ignorable="d">
+    <materialDesign:DialogHost
+        x:Name="DialogHost"
+        CloseOnClickAway="True"
+        Loaded="{s:Action OnViewFullyLoaded}"
+        Style="{DynamicResource MaterialDesignEmbeddedDialogHost}"
+        DialogBackground="{DynamicResource PrimaryHueMidBrush}"
+        DialogTheme="Light"
+        DialogMargin="10">
+        <Grid
+            IsEnabled="{Binding IsOpen, ElementName=DialogHost, Converter={x:Static converters:InverseBoolConverter.Instance}}"
+            Background="{DynamicResource PrimaryHueLightBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border
+                x:Name="HeaderBorder"
+                Grid.Row="0"
+                Padding="4,6"
+                Background="{DynamicResource PrimaryHueMidBrush}"
+                TextElement.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                MouseDown="HeaderBorder_OnMouseDown">
+                <DockPanel
+                    LastChildFill="False">
+                    <!--  Application name and version  -->
+                    <TextBlock
+                        DockPanel.Dock="Left"
+                        Margin="4,1,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="16">
+                        <Run
+                            FontWeight="Medium"
+                            Text="{x:Static lawernaTestApplication:App.Name}" />
+                    </TextBlock>
+                    <!--  Close button  -->
+                    <Button
+                        DockPanel.Dock="Right"
+                        x:Name="CloseButton"
+                        Padding="2"
+                        Margin="4"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Click="Close_OnClick"
+                        Style="{DynamicResource MaterialDesignFlatDarkButton}"
+                        ToolTip="Close"
+                        Width="24"
+                        Height="24">
+                        <materialDesign:PackIcon
+                            Width="18"
+                            Height="18"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            Kind="WindowClose" />
+                    </Button>
+                </DockPanel>
+            </Border>
+
+            <DockPanel
+                Grid.Row="1"
+                Margin="15"
+                LastChildFill="False">
+                <StackPanel
+                    DockPanel.Dock="Top"
+                    Orientation="Vertical">
+                    <TextBlock
+                        FontSize="14"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"
+                        Text="Weather"/>
+                    <DockPanel
+                        Margin="5"
+                        LastChildFill="False">
+                        <Image
+                            Panel.ZIndex="1"
+                            DockPanel.Dock="Left"
+                            Width="80"
+                            Height="80"
+                            Stretch="UniformToFill"
+                            Source="{Binding WeatherData.Weather[0].Icon,
+                            Converter={x:Static converters:UrlToImageConverter.Instance}}">
+                        </Image>
+                        <TextBlock
+                            DockPanel.Dock="Left"
+                            Margin="5, 7"
+                            FontSize="20"
+                            Foreground="{DynamicResource PrimaryHueMidBrush}"
+                            TextWrapping="Wrap"
+                            Text="{Binding WeatherData.Weather[0].Description}" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel
+                    DockPanel.Dock="Top"
+                    Orientation="Vertical">
+                    <TextBlock
+                        FontSize="14"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"
+                        Text="Temperature"/>
+                    <TextBlock
+                        DockPanel.Dock="Left"
+                        Margin="5, 7"
+                        FontSize="20"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"
+                        TextWrapping="Wrap">
+                        <Run
+                            FontWeight="Medium"
+                            Text="{Binding WeatherData.Main.Temp}" />
+                        <Run
+                            FontSize="16"
+                            FontWeight="Light"
+                            Text="°С" />
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel
+                    DockPanel.Dock="Top"
+                    Orientation="Vertical">
+                    <TextBlock
+                        FontSize="14"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"
+                        Text="Wind speed"/>
+                    <TextBlock
+                        DockPanel.Dock="Left"
+                        Margin="5, 7"
+                        FontSize="20"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"
+                        TextWrapping="Wrap">
+                        <Run
+                            FontSize="19"
+                            FontWeight="Medium"
+                            Text="{Binding WeatherData.Wind.Speed}" />
+                        <Run
+                            FontSize="16"
+                            FontWeight="Light"
+                            Text="m/s" />
+                    </TextBlock>
+                </StackPanel>
+            </DockPanel>
+            <!--  Buttons  -->
+            <StackPanel
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+
+                <!--  Settings  -->
+                <Button
+                    Margin="8"
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    ToolTip="Open settings"
+                    Command="{s:Action ShowSettings}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="24"
+                            Height="24"
+                            Kind="Settings" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="SETTINGS" />
+                    </StackPanel>
+                </Button>
+
+                <!--  About  -->
+                <Button
+                    Margin="8"
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    Command="{s:Action ShowAbout}"
+                    ToolTip="Open project page on GitHub">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="24"
+                            Height="24"
+                            Kind="Web" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="ABOUT" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </materialDesign:DialogHost>
 </Window>
