@@ -9,7 +9,7 @@ public class UrlToImageConverter : IValueConverter
     
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-        return $"{App.CdnUrl}{value as string}@2x.png";
+        return $"{App.CdnUrl}{value as string}.png";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
