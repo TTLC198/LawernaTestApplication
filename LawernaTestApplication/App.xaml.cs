@@ -22,16 +22,20 @@ namespace LawernaTestApplication
         public static Version Version { get; } = Assembly.GetName().Version!;
 
         public static string VersionString { get; } = "v" + Version.ToString(3).Trim();
+        
+        public static string CdnUrl { get; } = "http://openweathermap.org/img/wn/";
+        
+        public static string ApiUrl { get; } = "https://api.openweathermap.org/data/2.5/weather";
 
         public static string SettingsDirPath { get; } =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Name);
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Name);
 
         public static string ExecutableDirPath { get; } = AppDomain.CurrentDomain.BaseDirectory!;
 
         public static string ExecutableFilePath { get; } = Path.ChangeExtension(typeof(App).Assembly.Location, "exe");
 
         public static string GitHubProjectUrl { get; } =
-            "https://github.com/TTLC198/HSMonitor";
+            "https://github.com/TTLC198/LawernaTestApplication";
     }
 
     public partial class App
