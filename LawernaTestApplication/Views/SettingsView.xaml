@@ -1,0 +1,141 @@
+﻿<UserControl
+    x:Class="LawernaTestApplication.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:s="https://github.com/canton7/Stylet"
+    xmlns:viewModels="clr-namespace:LawernaTestApplication.ViewModels"
+    xmlns:validationRules="clr-namespace:LawernaTestApplication.Utils.ValidationRules"
+    d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
+    Height="260"
+    Style="{DynamicResource MaterialDesignRoot}"
+    Background="{DynamicResource MaterialDesignCardBackground}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style
+            TargetType="{x:Type Button}"
+            BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Setter
+                Property="Margin"
+                Value="0, 4, 4, 4" />
+        </Style>
+    </UserControl.Resources>
+    <DockPanel
+        LastChildFill="False">
+        <Grid
+            DockPanel.Dock="Top"
+            Margin="12, 8">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto"/>
+                <RowDefinition
+                    Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Text="City:"
+                VerticalAlignment="Center"/>
+            <TextBox
+                Grid.Row="1"
+                Text="{Binding ApplicationSettings.City}">
+            </TextBox>
+        </Grid>
+        
+        <Grid
+            DockPanel.Dock="Top"
+            Margin="12, 8">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto"/>
+                <RowDefinition
+                    Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Text="Api Key:"
+                VerticalAlignment="Center"/>
+            <TextBox
+                Grid.Row="1"
+                Text="{Binding ApplicationSettings.ApiKey}">
+            </TextBox>
+        </Grid>
+        
+        <Grid
+            DockPanel.Dock="Top"
+            Margin="12, 4">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto"/>
+                <RowDefinition
+                    Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Text="Update interval(ms):"
+                VerticalAlignment="Center"/>
+            <TextBox
+                Grid.Row="1">
+                <TextBox.Text>
+                    <Binding Path="ApplicationSettings.UpdateInterval"
+                             UpdateSourceTrigger="PropertyChanged" 
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validationRules:IntValueRule 
+                                Min="500"
+                                Max="9999"
+                                ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+
+        <!--  Buttons  -->
+        <Grid
+            DockPanel.Dock="Bottom"
+            HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="*"/>
+                <ColumnDefinition
+                    Width="*"/>
+                <ColumnDefinition
+                    Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--  Reset  -->
+            <Button
+                Grid.Column="0"
+                Command="{s:Action Reset}"
+                ToolTip="Reset all settings to their defaults">
+                <materialDesign:PackIcon
+                    Width="26"
+                    Height="26"
+                    Kind="Restart" />
+            </Button>
+            <!--  Cancel  -->
+            <Button
+                Grid.Column="1"
+                Command="{s:Action Cancel}">
+                <materialDesign:PackIcon
+                    Width="26"
+                    Height="26"
+                    Kind="Close" />
+            </Button>
+            <!--  Save  -->
+            <Button
+                Grid.Column="2"
+                Command="{s:Action Save}">
+                <materialDesign:PackIcon
+                    Width="26"
+                    Height="26"
+                    Kind="ContentSave" />
+            </Button>
+        </Grid>
+        
+        <!--  Separator  -->
+        <Rectangle
+            DockPanel.Dock="Bottom"
+            Height="1"
+            HorizontalAlignment="Stretch"
+            Fill="{DynamicResource MaterialDesignDivider}" />
+    </DockPanel>
+</UserControl>
