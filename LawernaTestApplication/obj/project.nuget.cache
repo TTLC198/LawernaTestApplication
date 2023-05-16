@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "m/DBxFcaafev7PtKDzjzq0qErQ+Xl7YbjnzdaCY3406NogSABtv2o7NZOGUPWHIg1J/gXbVxQ4xzQJzd0lKP+g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\yoreh\\RiderProjects\\LawernaTestApplication\\LawernaTestApplication\\LawernaTestApplication.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yoreh\\.nuget\\packages\\fody\\6.6.4\\fody.6.6.4.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\materialdesigncolors\\2.1.4\\materialdesigncolors.2.1.4.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\materialdesignthemes\\4.9.0\\materialdesignthemes.4.9.0.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\microsoft.netcore.platforms\\3.0.0\\microsoft.netcore.platforms.3.0.0.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\microsoft.win32.systemevents\\4.6.0\\microsoft.win32.systemevents.4.6.0.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\propertychanged.fody\\4.1.0\\propertychanged.fody.4.1.0.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\stylet\\1.3.6\\stylet.1.3.6.nupkg.sha512",
+    "C:\\Users\\yoreh\\.nuget\\packages\\system.drawing.common\\4.6.0\\system.drawing.common.4.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}
